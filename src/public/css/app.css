@@ -8,3 +8,34 @@ body {
 
 .music-breadcrumb {
   width: 100%; }
+
+.card-song {
+  height: 420px; }
+
+.img-song {
+  width: 100%;
+  height: 100%;
+  background-size: cover; }
+
+.title-song {
+  font-size: 24px;
+  font-weight: bold; }
+
+.desc-song {
+  font-size: 18px; }
+
+.title-detail-song {
+  color: #fff;
+  text-transform: uppercase;
+  margin-left: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  align-items: end; }
+
+.title-detail-sm-song {
+  color: #fff;
+  text-transform: capitalize;
+  margin-bottom: 30px; }
+
+.badge-song {
+  margin-left: 20px; }
