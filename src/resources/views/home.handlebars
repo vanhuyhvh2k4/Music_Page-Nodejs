@@ -1,0 +1,20 @@
+<nav class="music-breadcrumb mt-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+  </ol>
+</nav>
+
+<div class="row d-flex justify-content-center">
+  {{#each songs}}  
+  <div class="col-sm-6 col-md-4 col-lg-2 col-xl-2">
+    <div class="card">
+      <img class="card-img-top" src="{{this.image}}" alt="My Stupid Heart">
+      <div class="card-body">
+        <h5 class="card-title">{{this.name}}</h5>
+        <p class="card-text">{{this.description}}</p>
+        <a href="#" class="btn btn-primary">Listen Now</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
