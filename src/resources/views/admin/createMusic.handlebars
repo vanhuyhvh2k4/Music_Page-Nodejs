@@ -1,0 +1,41 @@
+<nav class="mt-2" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/myadmin">Admin Page</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Add A New Song</li>
+  </ol>
+</nav>
+
+<div class="container mt-4">
+    <form method="post" action="/myadmin/stored" enctype="multipart/form-data">
+        <div class="row mb-4">
+            <div class="col">
+                <label style="color: #fff;" for="name">Name</label> <br>
+                <input name="name" type="text" id="name" class="form-control" placeholder="Song Name">
+            </div>
+            <div class="col">
+                <label style="color: #fff;" for="author">Author</label> <br>
+                <input name="author" type="text" id="author" class="form-control" placeholder="Author">
+            </div>
+        </div>
+        <div class="form-group">
+            <label style="color: #fff;" for="description">Description</label> <br>
+            <textarea name="description" id="description" cols="119" rows="3" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group">
+            <label style="color: #fff;" for="image">Image</label>
+            <input name="image" type="text" class="form-control" id="image">
+        </div>
+        <div class="row mt-4">
+            <div class="col">
+                <label style="color: #fff;" for="mp4">Link Mp4</label>
+                <input name="mp4" type="text" class="form-control" id="mp4">
+            </div>
+            <div class="col">
+                <label style="color: #fff;" for="mp3">Link Mp3</label>
+                <input name="mp3" type="text" class="form-control" id="mp3">
+            </div>
+        </div>
+
+        <button class="btn btn btn-danger mt-4 float-right">Add New Song</button>
+    </form>
+</div>

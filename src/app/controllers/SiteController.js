@@ -10,15 +10,6 @@ class SiteController {
             }))
             .catch(next)
     }
-
-    // [GET] /song/:slug
-    showDetail (req, res, next) {
-        Song.findOne({ slug: req.params.slug}).lean()
-            .then((song) => res.render('songDetail', {
-                song,
-            }))
-            .catch(next)
-    }
 }
 
 module.exports = new SiteController;
