@@ -10,6 +10,14 @@ router.get('/myMusic/edit/:name', myadminController.showEdit);
 
 router.put('/myMusic/:name', myadminController.upload);
 
+router.patch('/myMusic/restore/:id', myadminController.restore);
+
+router.delete('/myMusic/:id', myadminController.delete);
+
+router.delete('/myMusic/deleteForce/:id', myadminController.deleteForce);
+
+router.get('/myMusic/trash', myadminController.showTrash);
+
 router.get('/myMusic', myadminController.showMyMusic);
 
 router.get('/', myadminController.showMyAdmin);

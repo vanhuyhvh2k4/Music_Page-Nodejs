@@ -1,7 +1,7 @@
 <nav class="mt-2" aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/myadmin">Admin Page</a></li>
-        <li class="breadcrumb-item active" aria-current="page">My Music</li>
+        <li class="breadcrumb-item"><a href="/myadmin/myMusic">My Music</a></li>
+        <li class="breadcrumb-item active" aria-current="page">My Trash</li>
     </ol>
 </nav>
 <div class="container">
@@ -11,7 +11,7 @@
                 <th class="bg-default" scope="col">Number</th>
                 <th class="bg-primary text-white" scope="col">Name</th>
                 <th class="bg-success text-white" scope="col">Author</th>
-                <th class="bg-danger text-white" colspan="4" scope="col">Created At</th>
+                <th class="bg-danger text-white" colspan="4" scope="col">Deleted At</th>
             </tr>
         </thead>
         <tbody>
@@ -20,27 +20,17 @@
                 <th scope="row">{{sum @index 1}}</th>
                 <td class="font-weight-bold">{{this.name}}</td>
                 <td>{{this.author}}</td>
-                <td>{{this.createdAt}}</td>
+                <td>{{this.deletedAt}}</td>
                 <td>
-                    <a href="/song/{{this.name}}" class="btn btn-success">View</a>
+                    <button class="btn btn-warning btn-restore" data-id="{{this._id}}">Restore</button>
                 </td>
                 <td>
-                    <a href="/myadmin/myMusic/edit/{{this.name}}" class="btn btn-warning">Edit</a>
-                </td>
-                <td>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="{{this._id}}">Remove</button>
+                    <a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="{{this._id}}">Permanently Deleted</a>
                 </td>
             </tr>
             {{/each}}
         </tbody>
     </table>
-</div>
-
-<div class="container text-center">
-    <a href="/myadmin/myMusic/trash" type="button" class="text-white mt-4 mb-4 btn btn-info btn-lg">
-        <i class="fa-solid fa-trash mr-2"></i>
-        Recycle Bin
-    </a>
 </div>
 
 <!-- Modal -->
@@ -65,24 +55,33 @@
     </div>
 </div>
 
-{{!-- Form Delete --}}
+{{!-- Form-restore --}}
+<form name="form-restore" method="post" action=""></form>
+{{!-- Form-delete --}}
 <form name="form-delete" method="post" action=""></form>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    var songId;
-    var btnDelete = $('#btn-delete');
-    var formDelete = document.forms['form-delete'];
+        var songId; 
+        var btnRestore = $('.btn-restore');
+        var formRestore = document.forms['form-restore'];
+        var btnDelete = $('#btn-delete');
+        var formDelete = document.forms['form-delete'];
 
-    $('#delete-modal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        songId = button.data('id') // Extract info from data-* attributes
-        console.log(songId)
+        $('#delete-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            songId = button.data('id') // Extract info from data-* attributes
         });
 
-    btnDelete.click(() => {
-        formDelete.action = '/myadmin/myMusic/' + songId + '?_method=DELETE';
-        formDelete.submit();
-    })
+        btnDelete.click(function () {
+            formDelete.action = '/myadmin/myMusic/deleteForce/' + songId + '?_method=DELETE'
+            formDelete.submit();
+        });
+
+        btnRestore.click(function () {
+            var songId = $(this).data('id');
+            formRestore.action = '/myadmin/myMusic/restore/' + songId + '?_method=PATCH';
+            formRestore.submit();
+        })
     })
 </script>

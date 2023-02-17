@@ -1,5 +1,4 @@
 const Song = require('../models/Song.js');
-const moment = require('moment');
 
 class MyAdminController {
 
@@ -23,7 +22,7 @@ class MyAdminController {
 
     // [GET] /myadmin/myMusic
     showMyMusic (req, res, next) {
-        Song.find({}).lean()
+        Song.find({ deleted : false}).lean()
             .then((songs) => res.render('admin/myMusic', {songs}))
             .catch(next)
     }
@@ -37,8 +36,36 @@ class MyAdminController {
 
     // [PUT] /myadmin/myMusic/:name
     upload (req, res, next) {
-        Song.update({name : req.params.name}, req.body).lean()
+        Song.updateOne({name : req.params.name}, req.body)
             .then(() => res.redirect('/myadmin/myMusic'))
+            .catch(next)
+    }
+
+    // [DELETE] /myadmin/myMusic/:id
+    delete (req, res, next) {
+        Song.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next)
+    }
+
+    // [GET] /myadmin/myMusic/trash
+    showTrash (req, res, next) {
+        Song.find({ deleted: true}).lean()
+            .then((songs) => res.render('admin/trashMusic', {songs}))
+            .catch(next)
+    }
+
+    // [PATCH] /myadmin/myMusic/restore/:id
+    restore (req, res, next) {
+        Song.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next)
+    }
+
+    // [DELETE] /myadmin/myMusic/deleteForce/:id
+    deleteForce (req, res, next) {
+        Song.deleteOne({ _id : req.params.id})
+            .then(() => res.redirect('back'))
             .catch(next)
     }
 }
