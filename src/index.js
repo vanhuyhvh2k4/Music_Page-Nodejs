@@ -5,12 +5,16 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const route = require('./routes/index.router.js');
 const db = require('./config/connectDB/index.js');
+var methodOverride = require('method-override')
 
-
+// middleware
 app.use(express.urlencoded({
   extended: true
 }));
 app.use(express.json());
+
+// method-overide
+app.use(methodOverride('_method'));
 
 // connectDB
 db.connect();
@@ -22,7 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 route(app);
 
 // handlebars
-app.engine('handlebars', exphbs());
+app.engine('handlebars', exphbs({
+  helpers: {
+    sum: (a, b) => a + b
+  }
+})
+);
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'resources/views'));
 
