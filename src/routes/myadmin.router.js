@@ -1,16 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const myadminController = require('../app/controllers/MyAdminController.js');
+const multer  = require('multer');
+const uploadImage = multer({ dest: './src/public/media/img/' });
 
 var authMiddleWares = require('../middlewares/auth.middlewars.js');
 
 router.get('/create', authMiddleWares.requireAuth, myadminController.showCreatePage);
 
-router.post('/stored', authMiddleWares.requireAuth, myadminController.stored);
+router.post('/stored',
+    uploadImage.single('image'),
+    authMiddleWares.requireAuth,
+    myadminController.stored);
 
 router.get('/myMusic/edit/:name', authMiddleWares.requireAuth, myadminController.showEdit);
 
-router.put('/myMusic/:name', myadminController.upload);
+router.put('/myMusic/:name',
+uploadImage.single('image'),
+myadminController.upload);
 
 router.patch('/myMusic/restore/:id', myadminController.restore);
 

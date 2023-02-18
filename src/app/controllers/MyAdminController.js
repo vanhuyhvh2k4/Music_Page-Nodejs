@@ -14,7 +14,14 @@ class MyAdminController {
 
     // [POST] /myadmin/stored
     stored (req, res, next) {
-        const song = new Song(req.body)
+        // res.body.image = req.file.path.split("\\").slice(2).join('/') + '.jpg';
+        const song = new Song({name : req.body.name,
+                            author: req.body.author,
+                            description: req.body.description, 
+                            image: req.file.path.split("\\").slice(4).join(''),
+                            mp4: req.body.mp4,
+                            mp3: req.body.mp3
+                        });
         song.save()
             .then(() => res.redirect('back'))
             .catch(next)
@@ -36,7 +43,15 @@ class MyAdminController {
 
     // [PUT] /myadmin/myMusic/:name
     upload (req, res, next) {
-        Song.updateOne({name : req.params.name}, req.body)
+        var path = req.file.path.split('\\').slice(4).join('');
+        Song.updateOne({name : req.params.name}, {
+            name : req.body.name,
+            author: req.body.author,
+            description: req.body.description, 
+            image: path,
+            mp4: req.body.mp4,
+            mp3: req.body.mp3
+        })
             .then(() => res.redirect('/myadmin/myMusic'))
             .catch(next)
     }
