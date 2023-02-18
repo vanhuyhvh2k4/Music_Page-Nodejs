@@ -14,13 +14,16 @@ class MyAdminController {
 
     // [POST] /myadmin/stored
     stored (req, res, next) {
-        // res.body.image = req.file.path.split("\\").slice(2).join('/') + '.jpg';
+        var image = req.files.image[0].originalname;
+        var mp4 = req.files.mp4[0].originalname;
+        var mp3 = req.files.mp3[0].originalname;
+
         const song = new Song({name : req.body.name,
                             author: req.body.author,
                             description: req.body.description, 
-                            image: req.file.path.split("\\").slice(4).join(''),
-                            mp4: req.body.mp4,
-                            mp3: req.body.mp3
+                            image: image,
+                            mp4: mp4,
+                            mp3: mp3,
                         });
         song.save()
             .then(() => res.redirect('back'))
@@ -43,14 +46,16 @@ class MyAdminController {
 
     // [PUT] /myadmin/myMusic/:name
     upload (req, res, next) {
-        var path = req.file.path.split('\\').slice(4).join('');
+        var image = req.files.image[0].originalname;
+        var mp4 = req.files.mp4[0].originalname;
+        var mp3 = req.files.mp3[0].originalname;
         Song.updateOne({name : req.params.name}, {
             name : req.body.name,
             author: req.body.author,
             description: req.body.description, 
-            image: path,
-            mp4: req.body.mp4,
-            mp3: req.body.mp3
+            image: image,
+            mp4: mp4,
+            mp3: mp3,
         })
             .then(() => res.redirect('/myadmin/myMusic'))
             .catch(next)
