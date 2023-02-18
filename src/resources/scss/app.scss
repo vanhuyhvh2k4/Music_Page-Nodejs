@@ -18,17 +18,27 @@ body {
 
 .img-song {
     width: 100%;
-    height: 100%;
+    height: 150px;
+    min-height: 150px;
+    min-width: 100%;
     background-size: cover;
 }
 
 .title-song {
     font-size: 24px;
     font-weight: bold;
+    overflow-y: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
 .desc-song {
     font-size: 18px;
+    overflow-y: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
 }
 
 .title-detail-song {
