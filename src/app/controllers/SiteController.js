@@ -4,7 +4,7 @@ class SiteController {
 
     // [GET] /song
     showHome (req, res, next) {
-        Song.find({}).lean()
+        Song.find({ deleted: false}).lean()
             .then((songs) => {
                 res.clearCookie('userId');
                 res.render('home', {songs});
