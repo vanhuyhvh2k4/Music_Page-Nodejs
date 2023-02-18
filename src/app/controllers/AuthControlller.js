@@ -1,4 +1,5 @@
 const Auth = require('../models/Auth.js');
+const md5 = require('md5');
 
 class AuthController {
 
@@ -11,7 +12,8 @@ class AuthController {
     login (req, res, next) {
         var email = req.body.email;
         var password = req.body.password;
-        Auth.findOne({ email: email, password : password}, function (err,  auth) {
+        var hashPassword = md5(password);
+        Auth.findOne({ email: email, password : hashPassword}, function (err,  auth) {
             var user = auth;
 
             if (!auth) {
