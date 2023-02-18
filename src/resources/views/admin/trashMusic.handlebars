@@ -28,6 +28,11 @@
                     <a href="" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="{{this._id}}">Permanently Deleted</a>
                 </td>
             </tr>
+
+            {{else}}
+            <tr>
+                <td colspan="4" class="text-center">The trash is empty</td>
+            </tr>
             {{/each}}
         </tbody>
     </table>

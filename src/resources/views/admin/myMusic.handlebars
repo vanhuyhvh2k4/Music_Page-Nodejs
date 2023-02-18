@@ -28,7 +28,16 @@
                     <a href="/myadmin/myMusic/edit/{{this.name}}" class="btn btn-warning">Edit</a>
                 </td>
                 <td>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#delete-modal" data-id="{{this._id}}">Remove</button>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#delete-modal"
+                        data-id="{{this._id}}">Remove</button>
+                </td>
+            </tr>
+
+            {{else}}
+            <tr>
+                <td colspan="4" class="text-center">
+                    <span>You dont' create any music</span>
+                    <a href="/myadmin/create">Create now !</a>
                 </td>
             </tr>
             {{/each}}
@@ -70,19 +79,19 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    var songId;
-    var btnDelete = $('#btn-delete');
-    var formDelete = document.forms['form-delete'];
+        var songId;
+        var btnDelete = $('#btn-delete');
+        var formDelete = document.forms['form-delete'];
 
-    $('#delete-modal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        songId = button.data('id') // Extract info from data-* attributes
-        console.log(songId)
+        $('#delete-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            songId = button.data('id') // Extract info from data-* attributes
+            console.log(songId)
         });
 
-    btnDelete.click(() => {
-        formDelete.action = '/myadmin/myMusic/' + songId + '?_method=DELETE';
-        formDelete.submit();
-    })
+        btnDelete.click(() => {
+            formDelete.action = '/myadmin/myMusic/' + songId + '?_method=DELETE';
+            formDelete.submit();
+        })
     })
 </script>
