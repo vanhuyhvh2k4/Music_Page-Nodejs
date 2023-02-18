@@ -32,7 +32,9 @@ body {
   overflow-y: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4; }
+  -webkit-line-clamp: 4;
+  min-height: 108px;
+  max-height: 108px; }
 
 .title-detail-song {
   color: #fff;
