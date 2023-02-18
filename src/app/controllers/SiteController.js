@@ -5,9 +5,11 @@ class SiteController {
     // [GET] /song
     showHome (req, res, next) {
         Song.find({}).lean()
-            .then((songs) => res.render('home', {
-                songs,
-            }))
+            .then((songs) => {
+                res.clearCookie('userId');
+                res.render('home', {songs});
+                return;
+            })
             .catch(next)
     }
 }
