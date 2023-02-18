@@ -6,6 +6,10 @@ const exphbs = require('express-handlebars');
 const route = require('./routes/index.router.js');
 const db = require('./config/connectDB/index.js');
 var methodOverride = require('method-override')
+var cookieParser = require('cookie-parser');
+
+// cookie parser
+app.use(cookieParser())
 
 // middleware
 app.use(express.urlencoded({

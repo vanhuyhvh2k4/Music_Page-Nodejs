@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const myadminController = require('../app/controllers/MyAdminController.js')
+const myadminController = require('../app/controllers/MyAdminController.js');
 
-router.get('/create', myadminController.showCreatePage);
+var authMiddleWares = require('../middlewares/auth.middlewars.js');
 
-router.post('/stored', myadminController.stored);
+router.get('/create', authMiddleWares.requireAuth, myadminController.showCreatePage);
 
-router.get('/myMusic/edit/:name', myadminController.showEdit);
+router.post('/stored', authMiddleWares.requireAuth, myadminController.stored);
+
+router.get('/myMusic/edit/:name', authMiddleWares.requireAuth, myadminController.showEdit);
 
 router.put('/myMusic/:name', myadminController.upload);
 
@@ -16,10 +18,10 @@ router.delete('/myMusic/:id', myadminController.delete);
 
 router.delete('/myMusic/deleteForce/:id', myadminController.deleteForce);
 
-router.get('/myMusic/trash', myadminController.showTrash);
+router.get('/myMusic/trash', authMiddleWares.requireAuth, myadminController.showTrash);
 
-router.get('/myMusic', myadminController.showMyMusic);
+router.get('/myMusic', authMiddleWares.requireAuth, myadminController.showMyMusic);
 
-router.get('/', myadminController.showMyAdmin);
+router.get('/', authMiddleWares.requireAuth, myadminController.showMyAdmin);
 
 module.exports = router;
