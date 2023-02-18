@@ -32,8 +32,12 @@ class MyAdminController {
 
     // [GET] /myadmin/myMusic
     showMyMusic (req, res, next) {
-        Song.find({ deleted : false}).lean()
-            .then((songs) => res.render('admin/myMusic', {songs}))
+        var SongQuery = Song.find({ deleted: false }).lean();
+
+        Promise.all([SongQuery, Song.countDocumentsDeleted()])
+            .then(([songs, deletedCount]) => 
+                res.render('admin/myMusic', {songs: songs, deletedCount: deletedCount})
+            )
             .catch(next)
     }
 
@@ -70,7 +74,7 @@ class MyAdminController {
 
     // [GET] /myadmin/myMusic/trash
     showTrash (req, res, next) {
-        Song.find({ deleted: true}).lean()
+        Song.findDeleted({}).lean()
             .then((songs) => res.render('admin/trashMusic', {songs}))
             .catch(next)
     }

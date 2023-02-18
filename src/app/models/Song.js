@@ -15,6 +15,8 @@ const Song = new Schema({
     timestamps: true,
 });
 
-Song.plugin(mongooseDelete, { deletedAt : true });
+// Song.plugin(mongooseDelete, { deletedAt : true });
 
+// Song.plugin(mongooseDelete, { deletedAt: true});
+Song.plugin(mongooseDelete, { overrideMethods: 'all', deletedAt: true, });
 module.exports = mongoose.model('Song', Song)
