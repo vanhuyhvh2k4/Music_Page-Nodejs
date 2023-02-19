@@ -16,7 +16,7 @@ var storage = multer.diskStorage(
 // const upload = multer({ dest: './src/public/media/uploads/' });
 var upload = multer( { storage: storage } );
 
-var authMiddleWares = require('../middlewares/auth.middlewars.js');
+var authMiddleWares = require('../middlewares/auth.middleware.js');
 
 router.get('/create', authMiddleWares.requireAuth, myadminController.showCreatePage);
 
