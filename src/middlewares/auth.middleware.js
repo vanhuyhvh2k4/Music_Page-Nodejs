@@ -1,4 +1,5 @@
 const Auth = require('../app/models/Auth.js');
+const User = require('../app/models/User.js');
 
 module.exports.requireAuth = function (req, res, next) {
     if (!req.cookies.userId) {
@@ -17,3 +18,22 @@ module.exports.requireAuth = function (req, res, next) {
           }
     })
 };
+
+module.exports.requireLogin = function (req, res, next) {
+    if (!req.cookies.loginId) {
+        res.redirect('/login');
+        return;
+    }
+
+    User.findOne({ _id: req.cookies.loginId}, function (err, auth) {
+         var user = auth._id;
+         if (!user) {
+             res.redirect('/login');
+             return;
+          }
+          else {
+            next();
+          }
+    })
+};
+
