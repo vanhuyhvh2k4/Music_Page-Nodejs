@@ -4,6 +4,7 @@ const myAdminRouter = require('./myadmin.router.js');
 const AuthRouter = require('./auth.router.js');
 
 function route (app) {
+    
     app.use('/', siteRouter);
 
     app.use('/song', songDetailRouter);
@@ -11,6 +12,7 @@ function route (app) {
     app.use('/myadmin', myAdminRouter);
 
     app.use('/admin', AuthRouter);
+
 }
 
 module.exports = route;
