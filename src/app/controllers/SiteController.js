@@ -5,16 +5,6 @@ class SiteController {
 
     // [GET] /
     showHome (req, res, next) {
-        // Song.find({ deleted: false}).lean()
-        //     .then((songs) => {
-        //         res.clearCookie('userId');
-        //         res.render('home', {songs});
-        //         return;
-        //     })
-        //     .catch(next)
-        
-        // User.findOne({ _id: req.cookies.loginId})
-        //     .then((user) => res.json(user.name))
 
         var SongQuery = Song.find({ deleted: false}).lean()
         var UserQuery = User.findOne({ _id: req.cookies.loginId}).lean()
@@ -24,40 +14,54 @@ class SiteController {
                 res.render('home', {songs, user})
             )
             .catch(next)
+
+        res.clearCookie('userId');
     }
 
     // [GET] /signup
     showSignup (req, res, next) {
         res.clearCookie("loginId");
-        res.render('users/signup');
+        res.render('users/signup', {type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')});
     }
 
     // [POST] /signup/store
     store (req, res, next) {
         if (req.body.password != req.body.repeatPassword) {
-            res.send('again password don\'t correct. Please enter again')
+            req.flash('type', 'danger');
+            req.flash('intro', 'Register Failed !  ');
+            req.flash('message', 'Again password don\'t correct. Please try again!');
+            res.redirect('/signup');
         }
-
-        User.create(req.body)
-            .then(() => res.redirect('/login'))
-            .catch(next)
+        else{
+            User.create(req.body)
+                .then(() => {
+                    req.flash('type', 'success');
+                    req.flash('intro', 'Register Successfully !  ');
+                    req.flash('message', 'Account had created. Please Login !');
+                    res.redirect('/signup');
+                })
+                .catch(next)
+        }
     }
 
     // [GET] /login
     showLogin (req, res, next) {
         res.clearCookie("loginId");
-        res.render('users/login');
+        res.render('users/login', { message: req.flash('message'), intro: req.flash('intro')});
     }
 
     // [POST] /login
     login (req, res, next) {
+
         User.findOne({ email: req.body.email, password: req.body.password}, function (err, user) {
             if (user) {
                 res.cookie('loginId', user._id)
                 res.redirect('/')
             }
             else {
-                res.send('fail')
+                req.flash('intro', 'Login Failed !  ');
+                req.flash('message', 'Email or Password don\'t correct. Please try again!');
+                res.redirect('/login');
             }
         })
     }
