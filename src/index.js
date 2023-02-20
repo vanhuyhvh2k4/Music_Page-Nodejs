@@ -45,13 +45,27 @@ route(app);
 // handlebars
 app.engine('handlebars', exphbs({
   helpers: {
-    sum: (a, b) => a + b
+    sum: (a, b) => a + b,
+    times: (n, block) => {
+      
+      for(var i = 1; i <= n; ++i)
+        var accum = '';
+        for(var i = 1; i <= n; ++i)
+        accum += block.fn(i);
+        return accum;
+    }
   }
 })
 );
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'resources/views'));
 
+// exphbs.registerHelper('times', function(n, block) {
+//   var accum = '';
+//   for(var i = 0; i <= n; ++i)
+//       accum += block.fn(i);
+//   return accum;
+// });
 
 
 app.listen(port, () => {
