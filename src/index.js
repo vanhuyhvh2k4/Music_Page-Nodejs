@@ -7,6 +7,19 @@ const route = require('./routes/index.router.js');
 const db = require('./config/connectDB/index.js');
 var methodOverride = require('method-override')
 var cookieParser = require('cookie-parser');
+var session = require('cookie-session');
+var flash = require('connect-flash');
+
+// cookie-session
+app.use(session({
+  secret: 'secret',
+  cookie: {maxAge: 60000},
+  resave: false,
+  saveUninitialized: false
+}));
+
+// connect-flash-message
+app.use(flash());
 
 // cookie parser
 app.use(cookieParser())
