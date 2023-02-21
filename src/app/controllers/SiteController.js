@@ -82,6 +82,27 @@ class SiteController {
             }
         })
     }
+
+    // [GET] /forgot
+    showForgot (req, res, next) {
+        res.render('users/verifyEmail', {intro: req.flash('intro'), message: req.flash('message')});
+    }
+
+    // [POST] /forgot
+    checkExist (req, res, next) {
+        User.findOne({ email: req.body.email}).lean()
+            .then((user) => {
+                if (user) {
+                    res.redirect('/forgot/' + user._id)
+                }
+                else {
+                    req.flash('intro', 'Don\'t found email  ');
+                    req.flash('message', 'Please check again!');
+                    res.redirect('back');
+                }
+            })
+            .catch(next)
+    }
 }
 
 module.exports = new SiteController;
