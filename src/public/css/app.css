@@ -36,6 +36,14 @@ body {
   min-height: 108px;
   max-height: 108px; }
 
+.desc-song-detail {
+  overflow-y: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  min-height: 150px;
+  max-height: 150px; }
+
 .title-detail-song {
   color: #fff;
   text-transform: uppercase;
@@ -61,3 +69,12 @@ body {
   flex: 1;
   height: 1px;
   background: #eee; }
+
+.detail-card {
+  color: initial;
+  transition: transform 0.2s linear; }
+
+.detail-card:hover {
+  text-decoration: none;
+  color: initial;
+  transform: translateY(-2px); }

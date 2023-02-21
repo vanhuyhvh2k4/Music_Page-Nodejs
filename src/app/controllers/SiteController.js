@@ -7,7 +7,7 @@ class SiteController {
     showHome (req, res, next) {
 
         var page = parseInt(req.query.page) || 1; //n
-        var perPage = 4; //x
+        var perPage = 8; //x
         var start = (page - 1) * perPage;
         var end = page * perPage;
         var SongQuery = Song.find({ deleted: false}).lean()
