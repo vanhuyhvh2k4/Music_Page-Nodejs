@@ -6,12 +6,27 @@ class SiteController {
     // [GET] /
     showHome (req, res, next) {
 
+        var page = parseInt(req.query.page) || 1; //n
+        var perPage = 4; //x
+        var start = (page - 1) * perPage;
+        var end = page * perPage;
         var SongQuery = Song.find({ deleted: false}).lean()
         var UserQuery = User.findOne({ _id: req.cookies.loginId}).lean()
+        var countNumber =  Song.countDocuments();
 
-        Promise.all([SongQuery, UserQuery])
-            .then(([songs, user]) => 
-                res.render('home', {songs, user})
+        Promise.all([SongQuery, UserQuery, countNumber])
+            .then(([songs, user, number]) => {
+                var pageNumber;
+
+                if (number%perPage == 0) {
+                    pageNumber = number / perPage;
+                }
+                else {
+                    pageNumber = parseInt((number / perPage) + 1);
+                }
+                songs = songs.slice(start, end);
+                res.render('home', {songs, user, pageNumber})
+            } 
             )
             .catch(next)
 
@@ -20,7 +35,8 @@ class SiteController {
 
     // [GET] /signup
     showSignup (req, res, next) {
-        res.clearCookie("loginId");
+        res.clearCookie('loginId');
+        res.clearCookie('userId');
         res.render('users/signup', {type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')});
     }
 
@@ -46,7 +62,8 @@ class SiteController {
 
     // [GET] /login
     showLogin (req, res, next) {
-        res.clearCookie("loginId");
+        res.clearCookie('loginId');
+        res.clearCookie('userId');
         res.render('users/login', { message: req.flash('message'), intro: req.flash('intro')});
     }
 
