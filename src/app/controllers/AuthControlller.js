@@ -5,7 +5,7 @@ class AuthController {
 
     // [GET] /admin
     show (req, res, next) {
-        res.render('auth/authLogin');
+        res.render('auth/authLogin', {intro: req.flash('intro'), message: req.flash('message')});
     }
 
     // [POST] /admin
@@ -17,11 +17,9 @@ class AuthController {
             var user = auth;
 
             if (!auth) {
-                res.render('auth/authLogin', {
-                    // errors: 'Wrong email or password',
-                    values: req.body
-                });
-                return;
+                req.flash('intro', 'Login Failed');
+                req.flash('message', 'Email or Password don\'t correct. Please try again!');
+                res.redirect('/admin');
             }
             else {
                 res.cookie('userId', user._id)

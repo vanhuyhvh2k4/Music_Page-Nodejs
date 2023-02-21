@@ -35,7 +35,8 @@ class SiteController {
 
     // [GET] /signup
     showSignup (req, res, next) {
-        res.clearCookie("loginId");
+        res.clearCookie('loginId');
+        res.clearCookie('userId');
         res.render('users/signup', {type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')});
     }
 
@@ -61,7 +62,8 @@ class SiteController {
 
     // [GET] /login
     showLogin (req, res, next) {
-        res.clearCookie("loginId");
+        res.clearCookie('loginId');
+        res.clearCookie('userId');
         res.render('users/login', { message: req.flash('message'), intro: req.flash('intro')});
     }
 
