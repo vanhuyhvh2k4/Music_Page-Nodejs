@@ -5,37 +5,37 @@
   </ol>
 </nav>
 
-<div class="container fix mt-4">
-    <form method="post" action="/myadmin/stored" enctype="multipart/form-data">
+<div class="container py-4">
+    <form style="padding: 24px 24px 120px; background-color: rgba(0, 0, 0, 0.8);" class="rounded" method="post" action="/myadmin/stored" enctype="multipart/form-data">
         <div class="row mb-4">
             <div class="col">
-                <label style="color: #fff;" for="name">Name</label> <br>
+                <label class="text-white" for="name">Name</label> <br>
                 <input name="name" type="text" id="name" class="form-control" placeholder="Song Name">
             </div>
             <div class="col">
-                <label style="color: #fff;" for="author">Author</label> <br>
+                <label class="text-white" for="author">Author</label> <br>
                 <input name="author" type="text" id="author" class="form-control" placeholder="Author">
             </div>
         </div>
         <div class="form-group">
-            <label style="color: #fff;" for="description">Description</label> <br>
-            <textarea name="description" id="description" cols="119" rows="3" placeholder="Description"></textarea>
+            <label class="text-white" for="description">Description</label> <br>
+            <textarea class="w-100" name="description" id="description"  rows="3" placeholder="Description"></textarea>
         </div>
         <div class="form-group">
-            <label style="color: #fff;" for="image">Image</label>
+            <label class="text-white" for="image">Image</label>
             <input name="image" type="file" class="form-control" id="image">
         </div>
         <div class="row mt-4">
             <div class="col">
-                <label style="color: #fff;" for="mp4">Link Mp4</label>
+                <label class="text-white" for="mp4">Link Mp4</label>
                 <input name="mp4" type="file" class="form-control" id="mp4">
             </div>
             <div class="col">
-                <label style="color: #fff;" for="mp3">Link Mp3</label>
+                <label class="text-white" for="mp3">Link Mp3</label>
                 <input name="mp3" type="file" class="form-control" id="mp3">
             </div>
         </div>
 
-        <button class="btn btn btn-danger mt-4 float-right">Add New Song</button>
+        <button class="btn btn btn-danger btn-lg mt-4 float-right">Add New Song</button>
     </form>
 </div>
