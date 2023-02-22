@@ -12,6 +12,12 @@ router.get('/forgot', siteController.showForgot);
 
 router.post('/forgot', siteController.checkExist);
 
+router.get('/forgot/:email', siteController.showChange);
+
+router.post('/forgot/:email', siteController.checkName);
+
+router.patch('/forgot/:email/update', siteController.update);
+
 router.get('/login', siteController.showLogin);
 
 router.post('/login', siteController.login);
