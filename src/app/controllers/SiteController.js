@@ -1,5 +1,6 @@
 const Song = require('../models/Song.js');
 const User = require('../models/User.js');
+const md5= require('md5');
 
 class SiteController {
 
@@ -42,14 +43,17 @@ class SiteController {
 
     // [POST] /signup/store
     store (req, res, next) {
+        var hashPassword = md5(req.body.password);
+
+
         if (req.body.password != req.body.repeatPassword) {
             req.flash('type', 'danger');
             req.flash('intro', 'Register Failed !  ');
-            req.flash('message', 'Again password don\'t correct. Please try again!');
+            req.flash('message', 'Repeat password is not correct. Please try again!');
             res.redirect('/signup');
         }
         else{
-            User.create(req.body)
+            User.create({ name: req.body.name, email: req.body.email, password: hashPassword })
                 .then(() => {
                     req.flash('type', 'success');
                     req.flash('intro', 'Register Successfully !  ');
@@ -69,8 +73,9 @@ class SiteController {
 
     // [POST] /login
     login (req, res, next) {
+        var hashPassword = md5(req.body.password);
 
-        User.findOne({ email: req.body.email, password: req.body.password}, function (err, user) {
+        User.findOne({ email: req.body.email, password: hashPassword}, function (err, user) {
             if (user) {
                 res.cookie('loginId', user._id)
                 res.redirect('/')
@@ -129,6 +134,7 @@ class SiteController {
 
     // [PATCH] /forgot/:email/update
     update (req, res, next ) {
+        var hashPassword = md5(req.body.password);
 
         if (req.body.password != req.body.confirmPassword) {
             req.flash('type', 'warning');
@@ -138,7 +144,7 @@ class SiteController {
             res.redirect('back')
         }
         else {
-            User.findOneAndUpdate({ email: req.params.email }, { password: req.body.password}).lean()
+            User.findOneAndUpdate({ email: req.params.email }, { password: hashPassword}).lean()
                 .then((user) => {
                     req.flash('type', 'success');
                     req.flash('intro', 'Changed Successfully  ');

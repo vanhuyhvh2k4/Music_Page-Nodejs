@@ -13,6 +13,10 @@ function route (app) {
 
     app.use('/admin', AuthRouter);
 
+    // 404 not found
+    app.get("*", (req, res) => {
+        res.status(404).render('errors/404notfound');
+  })
 }
 
 module.exports = route;
