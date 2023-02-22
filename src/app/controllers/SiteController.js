@@ -64,7 +64,7 @@ class SiteController {
     showLogin (req, res, next) {
         res.clearCookie('loginId');
         res.clearCookie('userId');
-        res.render('users/login', { message: req.flash('message'), intro: req.flash('intro')});
+        res.render('users/login', { type: req.flash('type'), message: req.flash('message'), intro: req.flash('intro')});
     }
 
     // [POST] /login
@@ -76,6 +76,7 @@ class SiteController {
                 res.redirect('/')
             }
             else {
+                req.flash('type', 'danger');
                 req.flash('intro', 'Login Failed !  ');
                 req.flash('message', 'Email or Password don\'t correct. Please try again!');
                 res.redirect('/login');
@@ -93,7 +94,7 @@ class SiteController {
         User.findOne({ email: req.body.email}).lean()
             .then((user) => {
                 if (user) {
-                    res.redirect('/forgot/' + user._id)
+                    res.redirect('/forgot/' + user.email)
                 }
                 else {
                     req.flash('intro', 'Don\'t found email  ');
@@ -102,6 +103,50 @@ class SiteController {
                 }
             })
             .catch(next)
+    }
+
+    // [GET] /forgot/:email
+    showChange (req, res, next) {
+        res.render('users/changePassword', { type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')});
+    }
+
+    // [POST] /forgot/:email
+    checkName (req, res, next) {
+        User.findOne({ email: req.params.email }).lean()
+            .then((user) => {
+                if (user.name != req.body.name) {
+                    req.flash('type', 'danger');
+                    req.flash('intro', 'Verify failed  ');
+                    req.flash('message', 'Verify answer is not correct. Please try again');
+                    res.redirect('back');
+                }
+                else {
+                    res.cookie('vrfsc', user._id);
+                    res.render('users/changePassword', {user});
+                }
+            })
+    }
+
+    // [PATCH] /forgot/:email/update
+    update (req, res, next ) {
+
+        if (req.body.password != req.body.confirmPassword) {
+            req.flash('type', 'warning');
+            req.flash('intro', 'Change Failed  ');
+            req.flash('message', 'Confirm password is not correct. Please try again!');
+            res.clearCookie('vrfsc');
+            res.redirect('back')
+        }
+        else {
+            User.findOneAndUpdate({ email: req.params.email }, { password: req.body.password}).lean()
+                .then((user) => {
+                    req.flash('type', 'success');
+                    req.flash('intro', 'Changed Successfully  ');
+                    req.flash('message', 'Your password had changed. Please login!')
+                    res.clearCookie('vrfsc');
+                    res.redirect('/login');
+                })
+        }
     }
 }
 
