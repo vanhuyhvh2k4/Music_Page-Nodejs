@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3000 || 5000;
 const path = require('path');
 const exphbs = require('express-handlebars');
 const route = require('./routes/index.router.js');

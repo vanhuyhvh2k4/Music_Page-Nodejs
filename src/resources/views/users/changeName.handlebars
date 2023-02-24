@@ -1,0 +1,26 @@
+<div class="container-fluid">
+
+    <div class="container mt-4">
+        {{#if message}}
+        <div class="alert alert-{{type}}" role="alert">
+        <strong>{{intro}}</strong>{{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        {{/if}}
+  </button>
+</div>
+    </div>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <form method="post" action="/user/name/{{loginId}}?_method=PATCH" style="background-color: rgba(240, 248, 255, 0.607); margin: 160px 0;" class="form p-4 rounded">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="name" class=" text-primary mb-4 font-weight-bold">NEW NAME</label>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="New Name" required="required">
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary mb-2 mr-4 mt-4">Confirm identity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

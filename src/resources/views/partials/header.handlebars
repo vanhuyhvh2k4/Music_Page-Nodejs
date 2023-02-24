@@ -16,10 +16,10 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           More
         </a>
-        <div class="dropdown-menu pb-0" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
+        <div class="dropdown-menu pb-0 drop-btn" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item changeName-btn" href="/user/name">Change Name</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item changePassword-btn" href="/user/password">Change Password</a>
           <div class="dropdown-divider"></div>
           <a dis class="dropdown-item logout-btn pb-2 pt-0 text-danger" href="/login">Log Out</a>
         </div>
@@ -34,7 +34,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var logoutBtn = $('.logout-btn');
+    var dropBtn = $('.drop-btn');
 
     var cookies =document.cookie
       .split(';')
@@ -43,8 +43,7 @@
         ({ ...accumulator, [key.trim()]: decodeURIComponent(value)}), {})
 
     if (!cookies.loginId) {
-      logoutBtn.attr('href', '#!');
-      logoutBtn.addClass('d-none');
+      dropBtn.addClass('d-none');
     }
   })
 </script>
