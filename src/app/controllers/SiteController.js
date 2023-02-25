@@ -12,7 +12,7 @@ class SiteController {
         var start = (page - 1) * perPage;
         var end = page * perPage;
         var SongQuery = Song.find({ deleted: false}).lean()
-        var UserQuery = User.findOne({ _id: req.cookies.loginId}).lean()
+        var UserQuery = User.findOne({ _id: req.cookies.loginId }).lean()
         var countNumber =  Song.countDocuments();
 
         Promise.all([SongQuery, UserQuery, countNumber])
@@ -153,6 +153,32 @@ class SiteController {
                     res.redirect('/login');
                 })
         }
+    }
+
+    // [GET] /search
+    search (req, res, next) {
+        var regex = new RegExp(req.query.q, 'i');
+        var page = parseInt(req.query.page) || 1; //n
+        var perPage = 8; //x
+        var start = (page - 1) * perPage;
+        var end = page * perPage;
+        var pageNumber;
+        var searchKeyword = req.query.q;
+
+        Song.find({ name: regex }).lean()
+            .then((songs) => {
+                var countSongsFound = songs.length;
+
+                if (countSongsFound%perPage == 0) {
+                    pageNumber = countSongsFound / perPage;
+                }
+                else {
+                    pageNumber = parseInt((countSongsFound / perPage) + 1);
+                }
+                songs = songs.slice(start, end);
+                res.render('search', {songs, pageNumber, searchKeyword, countSongsFound})
+            })
+            .catch(next)
     }
 }
 

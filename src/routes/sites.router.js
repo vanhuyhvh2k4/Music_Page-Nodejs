@@ -6,7 +6,7 @@ var authMethods = require('../middlewares/signup.middleware.js');
 
 var loginMiddleWare = require('../middlewares/auth.middleware.js')
 
-router.get('/', loginMiddleWare.requireLogin, siteController.showHome);
+router.get('/search', siteController.search);
 
 router.get('/forgot', siteController.showForgot);
 
@@ -25,5 +25,7 @@ router.post('/login', siteController.login);
 router.get('/signup', siteController.showSignup);
 
 router.post('/signup/store',authMethods.isInUse, siteController.store);
+
+router.get('/', loginMiddleWare.requireLogin, siteController.showHome);
 
 module.exports = router;

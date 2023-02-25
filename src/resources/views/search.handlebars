@@ -1,0 +1,49 @@
+<nav class="music-breadcrumb mt-4" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active text-success" aria-current="page">
+      We found <span class="text-primary">{{countSongsFound}}</span> result for keyword: <i class="text-danger">{{searchKeyword}}.</i>
+    </li>
+  </ol>
+</nav>
+
+<div class="container mb-4">
+  <div class="row d-flex justify-content-start">
+    {{#each songs}}
+    <div class="col col-md-4 col-lg-3 col-xl-3">
+      <div class="card card-song mt-4">
+        <img class="card-img-top img-song" src="/media/uploads/{{this.image}}" alt="{{this.name}}"
+          title="{{this.name}}">
+        <div class="card-body">
+          <h5 title="{{this.name}}" class="card-title title-song text-capitalize">{{this.name}}</h5>
+          <p class="card-text desc-song">{{this.description}}</p>
+          <a href="/song/{{this.name}}" class="btn btn-primary container-fluid">Listen Now</a>
+        </div>
+      </div>
+    </div>
+
+    {{else}}
+        
+        <div class="jumbotron jumbotron bg-warning">
+            <div class="container">
+                <div class="text-center">
+                    <h3>Don't found the result of <i class="text-danger">{{searchKeyword}}</i></h3>
+                </div>
+                <p class="lead font-italic text-secondary">Sorry. We cannot found the keyword that you fill out. Please try again by another key word</p>
+            </div>
+        </div>
+    {{/each}}
+  </div>
+</div>
+
+{{!-- pagination --}}
+<div class="container d-flex justify-content-center">
+  <nav style="width: fit-content;" aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    {{#times pageNumber}}
+    <li class="page-item"><a class="page-link" href="/?page={{this}}">{{this}}</a></li>
+    {{/times}}
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+</div>
