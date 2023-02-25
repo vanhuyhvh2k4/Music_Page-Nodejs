@@ -3,10 +3,6 @@
   margin: 0;
   box-sizing: border-box; }
 
-body {
-  background-image: url("https://wallpapercave.com/wp/wp5393135.jpg");
-  background-position: top; }
-
 .contain {
   background-image: url("https://wallpapercave.com/wp/wp5393135.jpg");
   background-size: cover;
