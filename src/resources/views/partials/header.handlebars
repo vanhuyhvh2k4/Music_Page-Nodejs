@@ -26,8 +26,8 @@
       </li>
     </ul>
     <form method="get" action="/search" class="form-inline my-2 my-lg-0">
-      <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required="required">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input name="q" class="search-input form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" required="required">
+      <button class="search-btn btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>
@@ -35,6 +35,8 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var dropBtn = $('.drop-btn');
+    var searchInput = $('.search-input');
+    var searchBtn = $('.search-btn');
 
     var cookies =document.cookie
       .split(';')
@@ -44,6 +46,8 @@
 
     if (!cookies.loginId) {
       dropBtn.addClass('d-none');
+      searchInput.attr('disabled', true);
+      searchBtn.attr('disabled', true);
     }
   })
 </script>
