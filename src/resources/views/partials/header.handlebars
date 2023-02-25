@@ -6,8 +6,8 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <button style="border: none; background-color: unset; outline: none; cursor: pointer;" id="home-btn" class="nav-link text-mued">Home</button>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/admin">Admin Page</a>
@@ -21,7 +21,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item changePassword-btn" href="/user/password">Change Password</a>
           <div class="dropdown-divider"></div>
-          <a dis class="dropdown-item logout-btn pb-2 pt-0 text-danger" href="/login">Log Out</a>
+          <button class="dropdown-item logout-btn pb-2 pt-0 text-danger" href="/login">Log Out</button>
         </div>
       </li>
     </ul>
@@ -34,9 +34,11 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    var logoutBtn = document.querySelector('.logout-btn');
     var dropBtn = $('.drop-btn');
     var searchInput = $('.search-input');
     var searchBtn = $('.search-btn');
+    var homeBtn = document.getElementById('home-btn');
 
     var cookies =document.cookie
       .split(';')
@@ -49,5 +51,13 @@
       searchInput.attr('disabled', true);
       searchBtn.attr('disabled', true);
     }
+
+    logoutBtn.onclick = function () {
+        location.href = "/login";
+    };
+
+    homeBtn.onclick = function () {
+        location.href = "/";
+    };
   })
 </script>
