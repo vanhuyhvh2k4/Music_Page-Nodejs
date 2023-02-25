@@ -75,18 +75,27 @@ class SiteController {
     login (req, res, next) {
         var hashPassword = md5(req.body.password);
 
-        User.findOne({ email: req.body.email, password: hashPassword}, function (err, user) {
-            if (user) {
-                res.cookie('loginId', user._id)
-                res.redirect('/')
-            }
-            else {
-                req.flash('type', 'danger');
-                req.flash('intro', 'Login Failed !  ');
-                req.flash('message', 'Email or Password don\'t correct. Please try again!');
-                res.redirect('/login');
-            }
-        })
+        User.findOne({ email: req.body.email, password: hashPassword}).lean()
+            .then((user) => {
+                if (user) {
+                    res.cookie('loginId', user._id)
+                    res.redirect('/')
+                }
+                else if (!user)  {
+                        req.flash('type', 'warning');
+                        req.flash('intro', 'Login Failed !  ');
+                        req.flash('message', 'This account was locked. Please contact admin to open account');
+                        res.redirect('back');
+                    }
+                    else{
+                        req.flash('type', 'danger');
+                        req.flash('intro', 'Login Failed !  ');
+                        req.flash('message', 'Email or Password don\'t correct. Please try again!');
+                        res.redirect('back');
+                }
+            })
+            .catch(next)
+            
     }
 
     // [GET] /forgot

@@ -1,0 +1,59 @@
+<nav class="pt-2" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/myadmin">Admin Page</a></li>
+    <li class="breadcrumb-item"><a href="/myadmin/account">Management Account</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Account disabled</li>
+  </ol>
+</nav>
+
+<div class="container py-4">
+    <table class="table bg-white">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th colspan="2" scope="col">Created At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td class="text-nowrap">{{this.name}}</td>
+      <td class="text-nowrap">{{this.email}}</td>
+      <td>{{this.createdAt}}</td>
+      <td>
+        <button id="btn-unlock" class="btn btn-success" data-toggle="modal" data-target="#disable-form" data-id="{{this._id}}">Unlock Account</button>
+      </td>
+    </tr>
+    {{else}}
+    <tr class="text-center">
+        <td colspan="5">Don't found any account</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+
+{{!-- Form enable --}}
+<form name="form-enable" method="post"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var btnUnlock = $('#btn-unlock');
+        var formEnable = document.forms['form-enable'];
+        var userId;
+        
+        $('#disable-form').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        userId = button.data('id')
+        })
+
+        btnUnlock.click(function () {
+            var userId = $(this).data('id');
+            formEnable.action = '/myadmin/account/' + userId + '/restore?_method=PATCH';
+            formEnable.submit();
+        })
+    })
+</script>
