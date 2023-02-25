@@ -1,0 +1,87 @@
+<nav class="pt-2" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/myadmin">Admin Page</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Management Account</li>
+  </ol>
+</nav>
+
+<div class="container py-4">
+  <table class="table bg-white">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th colspan="2" scope="col">Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <th scope="row">{{sum @index 1}}</th>
+        <td class="text-nowrap">{{this.name}}</td>
+        <td class="text-nowrap">{{this.email}}</td>
+        <td>{{this.createdAt}}</td>
+        <td>
+          <button class="btn btn-danger" data-toggle="modal" data-target="#disable-form" data-id="{{this._id}}">Disable
+            Account</button>
+        </td>
+      </tr>
+      {{else}}
+      <tr class="text-center">
+        <td colspan="5">Don't found any account</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <div class="text-center">
+    <a href="/myadmin/account/trash" class="btn btn-warning">
+      <i class="fa-solid fa-lock mr-2"></i>
+      Account Disabled
+    </a>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="disable-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">WARNING !</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you want to disable this account ?
+      </div>
+      <div class="modal-footer">
+        <button id="btn-disable" type="button" class="btn btn-danger">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Form disable --}}
+<form name="form-disable" method="post"></form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var btnDisable = $('#btn-disable');
+    var formDisable = document.forms['form-disable'];
+    var userId;
+
+    $('#disable-form').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget) // Button that triggered the modal
+      userId = button.data('id')
+    })
+    console.log(userId)
+
+    btnDisable.click(function () {
+      formDisable.action = '/myadmin/account/' + userId + '/change?_method=PATCH';
+      formDisable.submit();
+    })
+  })
+</script>

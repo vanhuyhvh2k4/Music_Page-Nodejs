@@ -39,6 +39,14 @@ router.put('/myMusic/:name',
     ]),
 myadminController.upload);
 
+router.get('/account', myadminController.showAccount);
+
+router.patch('/account/:id/change', myadminController.changeStatus);
+
+router.get('/account/trash', myadminController.showAccountTrash);
+
+router.patch('/account/:id/restore', myadminController.enableAccount);
+
 router.patch('/myMusic/restore/:id', myadminController.restore);
 
 router.delete('/myMusic/:id', myadminController.delete);

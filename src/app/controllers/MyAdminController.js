@@ -1,4 +1,5 @@
 const Song = require('../models/Song.js');
+const User = require('../models/User.js');
 
 class MyAdminController {
 
@@ -90,6 +91,34 @@ class MyAdminController {
     deleteForce (req, res, next) {
         Song.deleteOne({ _id : req.params.id})
             .then(() => res.redirect('back'))
+            .catch(next)
+    }
+
+    //[GET] /myadmin/account
+    showAccount (req, res, next) {
+        User.find({}).lean()
+            .then((users) => res.render('admin/account', {users}))
+            .catch(next)
+    }
+
+    //[PATCH] /myadmin/account/id:/change
+    changeStatus (req, res, next) {
+        User.delete({ _id: req.params.id })
+            .then((user) => res.redirect('back'))
+            .catch(next)
+    }
+
+    //[GET] /myadmin/account/trash
+    showAccountTrash (req, res, next) {
+        User.findDeleted({}).lean()
+            .then((users) => res.render('admin/trashAccount', {users}))
+            .catch(next)
+    }
+
+    //[PATCH] /myadmin/account/:id/restore
+    enableAccount (req, res, next) {
+        User.restore({ _id: req.params.id}).lean()
+            .then((users) => res.redirect('back'))
             .catch(next)
     }
 }
