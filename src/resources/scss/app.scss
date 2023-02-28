@@ -95,3 +95,13 @@
     color: initial;
     transform: translateY(-2px);
 }
+
+.comment-wrapper {
+    height: 568px;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+.comment-wrapper::-webkit-scrollbar {
+    display: none;
+}
