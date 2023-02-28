@@ -7,4 +7,6 @@ var loginMiddleWare = require('../middlewares/auth.middleware.js')
 
 router.get('/:slug', loginMiddleWare.requireLogin, songDetailController.showDetail);
 
+router.post('/:slug', songDetailController.sendComment);
+
 module.exports = router;
