@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-// var mongooseDelete = require('mongoose-delete');
+var mongooseDelete = require('mongoose-delete');
 
 const Comment = new Schema({
     userId: String,
@@ -14,5 +14,5 @@ const Comment = new Schema({
     timestamps: true,
 });
 
-// Song.plugin(mongooseDelete, { overrideMethods: 'all', deletedAt: true, });
+Comment.plugin(mongooseDelete, { overrideMethods: 'all', deletedAt: true, });
 module.exports = mongoose.model('Comment', Comment)

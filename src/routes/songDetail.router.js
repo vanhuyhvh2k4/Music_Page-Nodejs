@@ -9,4 +9,6 @@ router.get('/:slug', loginMiddleWare.requireLogin, songDetailController.showDeta
 
 router.post('/:slug', songDetailController.sendComment);
 
+router.delete('/:commentId', songDetailController.delete)
+
 module.exports = router;
