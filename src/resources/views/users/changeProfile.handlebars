@@ -1,0 +1,91 @@
+<div style="background-color: bisque;" class="container-fluid p-4">
+  <form method="post" action="/user/edit/{{user._id}}/?_method=PUT" style="padding: 100px 50px;" class="row col-8 offset-2 form-change-profile" enctype="multipart/form-data">
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="avatar" class="form-label text-white">
+        <i class="fa-solid fa-user-tie"></i>
+        Avatar
+      </label>
+      <input name="avatar" type="file" class="form-control" id="avatar" required="required"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="name" class="form-label text-white">
+        <i class="fa-solid fa-file-signature"></i>
+        Name
+      </label>
+      <input name="name" type="text" class="form-control" id="name" value="{{user.name}}" required="required"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="specialName" class="form-label text-white">
+        <i class="fa-solid fa-signature"></i>
+        Special Name
+      </label>
+      <input name="specialName" type="text" class="form-control" id="specialName" value="{{user.specialName}}" required="required"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="phoneNumber" class="form-label text-white">
+        <i class="fa-solid fa-mobile-screen"></i>
+        Phone Number
+      </label>
+      <input name="phoneNumber" type="text" class="form-control" id="phoneNumber" value="{{user.phone}}" required="required"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="facebook" class="form-label text-white">
+        <i class="fa-brands fa-facebook"></i>
+        Facebook
+      </label>
+      <input name="facebook" type="text" class="form-control" id="facebook" value="{{user.facebook}}" required="required"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="twiter" class="form-label text-white">
+        <i class="fa-brands fa-twitter"></i>
+        Twiter
+      </label>
+      <input name="twiter" type="text" class="form-control" id="twiter" value="{{user.twiter}}" required="required"/>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="form-outline mb-4">
+      <label for="instagram" class="form-label text-white">
+        <i class="fa-brands fa-instagram"></i>
+        Instagram
+      </label>
+      <input name="instagram" type="text" class="form-control" id="instagram" value="{{user.instagram}}" required="required"/>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Save changes</button>
+  </div>
+</form>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+  'use strict';
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation');
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms).forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
+</script>

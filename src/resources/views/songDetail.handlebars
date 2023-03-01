@@ -68,11 +68,12 @@
 
           <div class="comment-wrapper">
             {{#each comments}}
-            <div class="card-body">
+            <div class="card-body comment-item">
               <div class="d-flex flex-start align-items-center">
-                <img class="rounded-circle shadow-1-strong me-3"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60"
-                  height="60" />
+                <div style="width: 60px; height: 60px;">
+                  <img style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle shadow-1-strong me-3" src="/media/users/{{this.avatar}}" alt="avatar"/>
+                </div>
+
                 <div class="ml-2">
                   <h6 class="fw-bold text-primary mb-1">{{this.userName}}</h6>
                   <p class="text-muted small mb-0">
@@ -81,7 +82,7 @@
                 </div>
               </div>
 
-              <p class="mt-3 mb-4 pb-2">
+              <p style="margin-left: 3.6rem;" class="mt-3 mb-4 pb-2">
                 {{this.content}}
               </p>
 
@@ -110,17 +111,21 @@
             {{/each}}
           </div>
 
-          <div class="card-footer py-3 border-0" style="background-color: #e5e5e5;">
+          <div class="card-footer py-4 border-0" style="background-color: #e5e5e5;">
             <div class="d-flex flex-start w-100">
-              <img class="rounded-circle shadow-1-strong me-3 mr-2"
-                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40" height="40" />
+              <div style="width: 45px; height: 45px; margin-right: 12px;">
+                <img style="width: 100%; height: 100%; object-fit: cover;" class="rounded-circle shadow-1-strong me-3 mr-2 boder"
+                  src="/media/users/{{user.avatar}}" alt="avatar"/>
+              </div>
               <form name="form-submit" method="post" class="form-outline w-100">
                 <textarea class="form-control" id="textAreaExample" rows="4" style="background: #fff;"
-                  placeholder="Write comment here......" name="comment"></textarea>
+                  placeholder="Write comment here......" name="comment" required="required"></textarea>
+                  <div class="text-right mt-4">
+                <button id="btn-submit" type="submit" class="btn btn-danger btn-md ml-4">Post comment</button>
+                  </div>
               </form>
             </div>
             <div class="text-right mt-2 pt-1">
-              <button id="btn-submit" type="submit" class="btn btn-danger btn-md ml-4">Post comment</button>
             </div>
           </div>
 
@@ -135,14 +140,9 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var btnSubmit = $('#btn-submit');
     var formSubmit = document.forms['form-submit'];
     var btnDelete = $('.btn-delete');
     var formDelete = document.forms['form-delete'];
-
-    btnSubmit.click(function () {
-      formSubmit.submit();
-    })
 
     btnDelete.click(function () {
       var commentId = $(this).attr('data-commentId');

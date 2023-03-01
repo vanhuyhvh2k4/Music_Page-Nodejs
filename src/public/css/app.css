@@ -88,3 +88,36 @@
 
 .comment-wrapper::-webkit-scrollbar {
   display: none; }
+
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #f6d365;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right bottom, #f6d365, #fda085);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right bottom, #f6d365, #fda085); }
+
+.form-change-profile {
+  border-top-left-radius: 30%;
+  border-bottom-right-radius: 30%;
+  background-image: url("https://th.bing.com/th/id/OIP.ze87PwznSisJ8rxvY9lIJgHaEB?pid=ImgDet&rs=1");
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.comment-item:nth-of-type(4n) {
+  background-color: #fff0c0; }
+
+.comment-item:nth-of-type(4n+1) {
+  background-color: #ceffd2; }
+
+.comment-item:nth-of-type(4n+2) {
+  background-color: #ffcced; }
+
+.comment-item:nth-of-type(4n+3) {
+  background-color: #ccdaff; }
+
+.comment-item + .comment-item {
+  margin: 12px 0px; }
+
+.comment-item {
+  border: 1px solid #ccc; }
