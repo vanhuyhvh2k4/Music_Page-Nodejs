@@ -11,7 +11,7 @@ class SongDetailController {
         var songName = req.params.slug;
         var detailSongQuery = Song.findOne({ name: req.params.slug}).lean();
         var moreSongQuery = Song.find({}).lean();
-        var commentQuery = Comment.find({ songName: songName }).lean()
+        var commentQuery = Comment.find({ songName: songName, deleted: false }).sort({"createdAt": -1}).lean()
 
         Promise.all([detailSongQuery, moreSongQuery, commentQuery])
             .then(([song, songs, comments]) => {
@@ -22,11 +22,12 @@ class SongDetailController {
                 // // display 8 card 
                 songs = songs.slice(0, 8);
 
-                res.render('songDetail', {song, songs, comments})
+                res.render('songDetail', {song, songs, comments, type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')})
             })
             .catch(next)
     }
 
+    //[POST] /song/:slug
     sendComment (req, res, next) {
         var userId = req.cookies.loginId;
         var songName = req.params.slug;
@@ -39,8 +40,28 @@ class SongDetailController {
                 .then(() => res.redirect('back'))
                 .catch(next)
         })
+    }
 
-        
+    //[DELETE] /song/:commentId
+    delete (req, res, next) {
+        var userId = req.cookies.loginId;
+        var commentId = req.params.commentId;
+
+            Comment.findOne({ _id: commentId }).lean()
+            .then((comment) => {
+                if (userId == comment.userId) {
+                    Comment.delete({ _id: req.params.commentId }).lean()
+                    .then(() => res.redirect('back'))
+                    .catch(next)
+                }
+                else {
+                    req.flash('type', 'danger');
+                    req.flash('intro', 'Deleted failed  ');
+                    req.flash('message', 'You cannot delete other people\'s comments');
+                    res.redirect('back');
+                }
+            })
+        return;
     }
 }
 
