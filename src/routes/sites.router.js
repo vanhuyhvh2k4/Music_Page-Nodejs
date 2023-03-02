@@ -24,7 +24,7 @@ router.post('/login', siteController.login);
 
 router.get('/signup', siteController.showSignup);
 
-router.post('/signup/store',authMethods.isInUse, siteController.store);
+router.post('/signup/store',authMethods.isInUse, authMethods.isLocked, siteController.store);
 
 router.get('/', loginMiddleWare.requireLogin, siteController.showHome);
 
