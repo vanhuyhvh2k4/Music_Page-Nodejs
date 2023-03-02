@@ -6,36 +6,48 @@
 </nav>
 
 <div class="container py-4">
-    <form style="padding: 24px 24px 120px; background-color: rgba(0, 0, 0, 0.8);" class="rounded" method="post" action="/myadmin/stored" enctype="multipart/form-data">
+    <form style="padding: 24px 24px 120px; background-color: rgb(255, 184, 91);" class="rounded" method="post" action="/myadmin/stored">
         <div class="row mb-4">
             <div class="col">
-                <label class="text-white" for="name">Name</label> <br>
-                <input name="name" type="text" id="name" class="form-control" placeholder="Song Name">
+                <label class="text-white" for="name">
+                    <i class="fa-solid fa-file-signature text-danger"></i>
+                    Name
+                </label>
+                <input name="name" type="text" id="name" class="form-control" placeholder="Song Name" required="required">
             </div>
             <div class="col">
-                <label class="text-white" for="author">Author</label> <br>
-                <input name="author" type="text" id="author" class="form-control" placeholder="Author">
+                <label class="text-white" for="author">
+                    <i class="fa-solid fa-user-secret text-success"></i>
+                    Author
+                </label>
+                <input name="author" type="text" id="author" class="form-control" placeholder="Author" required="required">
             </div>
         </div>
         <div class="form-group">
-            <label class="text-white" for="description">Description</label> <br>
-            <textarea class="w-100" name="description" id="description"  rows="3" placeholder="Description"></textarea>
+            <label class="text-white" for="description">
+                <i class="fa-solid fa-file-lines text-info"></i>
+                Description
+            </label>
+            <textarea class="w-100" name="description" id="description"  rows="3" placeholder="Description" required="required"></textarea>
         </div>
         <div class="form-group">
-            <label class="text-white" for="image">Image</label>
-            <input name="image" type="file" class="form-control" id="image">
+            <label class="text-white" for="image">
+                <i class="fa-solid fa-images text-dark"></i>
+                Image
+            </label>
+            <input name="image" type="text" class="form-control" id="image" placeholder="Link image" required="required">
         </div>
-        <div class="row mt-4">
-            <div class="col">
-                <label class="text-white" for="mp4">Link Mp4</label>
-                <input name="mp4" type="file" class="form-control" id="mp4">
+            <div class="form-group">
+                <label class="text-white" for="mp4">
+                    <i class="fa-solid fa-photo-film text-primary"></i>
+                    Link Mp4
+                </label>
+                <input name="mp4" type="text" class="form-control" id="mp4" placeholder="Link mp4" required="required">
             </div>
-            <div class="col">
-                <label class="text-white" for="mp3">Link Mp3</label>
-                <input name="mp3" type="file" class="form-control" id="mp3">
-            </div>
-        </div>
 
-        <button class="btn btn btn-danger btn-lg mt-4 float-right">Add New Song</button>
+        <button class="btn btn btn-danger btn-md mt-4 float-right">
+            <i class="fa-solid fa-wrench text-warning"></i>
+            Add New Song
+            </button>
     </form>
 </div>

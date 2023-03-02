@@ -16,16 +16,12 @@ class MyAdminController {
 
     // [POST] /myadmin/stored
     stored (req, res, next) {
-        var image = req.files.image[0].originalname;
-        var mp4 = req.files.mp4[0].originalname;
-        var mp3 = req.files.mp3[0].originalname;
 
         const song = new Song({name : req.body.name,
                             author: req.body.author,
                             description: req.body.description, 
-                            image: image,
-                            mp4: mp4,
-                            mp3: mp3,
+                            image: req.body.image,
+                            mp4: req.body.mp4,
                         });
         song.save()
             .then(() => res.redirect('back'))
@@ -52,16 +48,12 @@ class MyAdminController {
 
     // [PUT] /myadmin/myMusic/:name
     upload (req, res, next) {
-        var image = req.files.image[0].originalname;
-        var mp4 = req.files.mp4[0].originalname;
-        var mp3 = req.files.mp3[0].originalname;
         Song.updateOne({name : req.params.name}, {
             name : req.body.name,
             author: req.body.author,
             description: req.body.description, 
-            image: image,
-            mp4: mp4,
-            mp3: mp3,
+            image: req.body.image,
+            mp4: req.body.mp4,
         })
             .then(() => res.redirect('/myadmin/myMusic'))
             .catch(next)
@@ -90,23 +82,8 @@ class MyAdminController {
 
     // [DELETE] /myadmin/myMusic/deleteForce/:id
     deleteForce (req, res, next) {
-        var songQuery = Song.findOneDeleted({ _id: req.params.id }).lean();
-        var songDeleteForce = Song.deleteOne({ _id : req.params.id}).lean();
 
-        Promise.all([songQuery, songDeleteForce])
-            .then(([song]) => {
-                var imgPath = 'src/public/media/uploads/' + song.image;
-                var mp4Path = 'src/public/media/uploads/' + song.mp4;
-                var mp3Path = 'src/public/media/uploads/' + song.mp3;
-                fs.unlinkSync(imgPath);
-                fs.unlinkSync(mp4Path);
-                fs.unlinkSync(mp3Path);
-                res.redirect('back');
-            })
-            .catch(next)
-
-        return;
-        Song.deleteOne({ _id : req.params.id})
+        Song.deleteOne({ _id : req.params.id })
             .then(() => res.redirect('back'))
             .catch(next)
     }
