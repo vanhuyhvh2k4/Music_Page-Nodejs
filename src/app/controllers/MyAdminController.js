@@ -1,5 +1,6 @@
 const Song = require('../models/Song.js');
 const User = require('../models/User.js');
+const fs = require('fs');
 
 class MyAdminController {
 
@@ -89,6 +90,22 @@ class MyAdminController {
 
     // [DELETE] /myadmin/myMusic/deleteForce/:id
     deleteForce (req, res, next) {
+        var songQuery = Song.findOneDeleted({ _id: req.params.id }).lean();
+        var songDeleteForce = Song.deleteOne({ _id : req.params.id}).lean();
+
+        Promise.all([songQuery, songDeleteForce])
+            .then(([song]) => {
+                var imgPath = 'src/public/media/uploads/' + song.image;
+                var mp4Path = 'src/public/media/uploads/' + song.mp4;
+                var mp3Path = 'src/public/media/uploads/' + song.mp3;
+                fs.unlinkSync(imgPath);
+                fs.unlinkSync(mp4Path);
+                fs.unlinkSync(mp3Path);
+                res.redirect('back');
+            })
+            .catch(next)
+
+        return;
         Song.deleteOne({ _id : req.params.id})
             .then(() => res.redirect('back'))
             .catch(next)
