@@ -28,37 +28,6 @@ class ProfileController {
             .catch(next)
     }
 
-    // // [GET] /user/name
-    // showChangeName (req, res, next) {
-    //     var loginId = req.cookies.loginId;
-    //     res.render('users/changeName', {loginId, type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')});
-    // }
-
-    // // [PATCH] /user/name:id
-    // changeName (req, res, next) {
-    //     User.findById({ _id: req.params.id }).lean()
-    //         .then((user) => {
-    //             if (user.name == req.body.name) {
-    //                 req.flash('type', 'warning');
-    //                 req.flash('intro', 'Name failed  ');
-    //                 req.flash('message', 'This name is same your name, please change another name.');
-    //                 res.redirect('back');
-    //             }
-    //             else {
-    //                 User.findByIdAndUpdate({ _id: req.params.id }, { name: req.body.name }).lean()
-    //                             .then((user) => {
-    //                                 req.flash('type', 'success');
-    //                                 req.flash('intro', 'Name changed  ');
-    //                                 req.flash('message', 'Your name was changed to ' + req.body.name);
-    //                                 res.redirect('back');
-    //                             })
-    //                             .catch(next)
-    //             }
-    //         })
-
-        
-    // }
-
     // [GET] /user/password
     showChangePassword (req, res, next) {
         var loginId = req.cookies.loginId;
