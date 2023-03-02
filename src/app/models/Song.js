@@ -10,7 +10,6 @@ const Song = new Schema({
         description: String,
         image: String,
         mp4: String,
-        mp3: String,
 }, {
     timestamps: true,
 });

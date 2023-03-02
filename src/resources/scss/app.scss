@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body {
+    overflow: hidden;
+}
+
 .contain {
     background-image: url('https://wallpapercave.com/wp/wp5393135.jpg');
     background-size: cover;
@@ -146,4 +150,10 @@
 
 .comment-item {
     border: 1px solid #ccc;
+}
+
+.form-edit {
+    padding: 50px 25px 100px;
+    background-color: #fff0c0;
+    border-radius: 12px;
 }
