@@ -12,8 +12,10 @@
     {{#each songs}}
     <div class="col col-md-4 col-lg-3 col-xl-3">
       <div class="card card-song mt-4">
-        <img class="card-img-top img-song" src="{{this.image}}" alt="{{this.name}}"
-          title="{{this.name}}">
+        <div class="img-song">
+          <img style="width: 100%; height: 100%; object-fit: cover; background-position: centen;" class="card-img-top" src="{{this.image}}" alt="{{this.name}}"
+            title="{{this.name}}">
+        </div>
         <div class="card-body">
           <h5 title="{{this.name}}" class="card-title title-song text-capitalize">{{this.name}}</h5>
           <p class="card-text desc-song">{{this.description}}</p>

@@ -3,6 +3,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+html,body {
+    scroll-behavior: smooth;
+}
 
 body {
     overflow: hidden;
@@ -25,8 +28,8 @@ body {
 
 .img-song {
     width: 100%;
-    height: 150px;
-    min-height: 150px;
+    height: 160px;
+    min-height: 160px;
     min-width: 100%;
     background-size: cover;
 }
@@ -78,10 +81,6 @@ body {
     margin-left: 20px;
 }
 
-.fix {
-    margin-bottom: 5.5rem !important;
-}
-
 .divider:after,
 .divider:before {
     content: "";
@@ -101,7 +100,7 @@ body {
 }
 
 .comment-wrapper {
-    height: 568px;
+    height: 476px;
     max-height: 100%;
     overflow-y: scroll;
 }
@@ -156,4 +155,36 @@ body {
     padding: 50px 25px 100px;
     background-color: #fff0c0;
     border-radius: 12px;
+}
+
+.lyric-container {
+    position: relative;
+}
+
+.song-lyric {
+    height: fit-content;
+    max-height: 100%;
+}
+
+.song-lyric.limited {
+    height: 120px;
+    max-height: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.lyric-more {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #f6d365;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
 }
