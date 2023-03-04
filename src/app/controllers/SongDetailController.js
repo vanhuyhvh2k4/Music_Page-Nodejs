@@ -13,10 +13,11 @@ class SongDetailController {
         Song.findOne({ "name": req.params.slug }).exec((err, song) => {
 
             var commentQuery = Comment.find({ "songId": song._id })
-        .populate({
-            path: 'userId',
-            select: 'name avatar'
-        });
+                .sort({ "createdAt": -1 })
+                .populate({
+                    path: 'userId',
+                    select: 'name avatar'
+                });
 
             Promise.all([moreSongQuery, commentQuery, userQuery])
             .then(([songs, comments, user]) => {

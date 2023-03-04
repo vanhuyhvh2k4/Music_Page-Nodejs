@@ -1,0 +1,131 @@
+<div class="container-fluid px-0">
+  <section class="vh-100 gradient-custom-2">
+    <nav class="pt-2" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Admin Page</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="/myadmin/more">More Feature</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Details</li>
+      </ol>
+    </nav>
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-12 col-xl-10">
+
+          <div class="card mask-custom">
+            <div class="card-body p-4 text-white">
+
+              <div class="text-center pt-3 pb-2">
+                <img
+                  src="https://lh6.ggpht.com/b8-EzDibrJ5wO5tt2nxDwX0o4tU1IllpWEAvlKvObiZRynppxDyB4_iqYLDZjcaT2vA=w300"
+                  alt="Check" width="80">
+                <h2 class="my-4">{{song.name}}</h2>
+              </div>
+              <table class="table text-white mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Status</th>
+                    <th class="text-center" scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each comments}}
+                  <tr class="fw-normal">
+                    <th class="d-flex align-items-center">
+                      <div style="width: 45px; height: 45px;">
+                        <img src="/media/users/{{this.userId.avatar}}" alt="avatar 1"
+                          style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                      </div>
+                      <span class="ms-2 ml-2 text-nowrap">{{this.userId.name}}</span>
+                    </th>
+                    <td class="align-middle">
+                      <span>{{this.content}}</span>
+                    </td>
+                    <td class="align-middle">
+                      {{#if this.deleted}}
+                      <h6 class="mb-0"><span class="badge bg-danger">hidden</span></h6>
+                      {{else}}
+                      <h6 class="mb-0"><span class="badge bg-success">public</span></h6>
+                      {{/if}}
+                    </td>
+                    <td class="align-middle text-center">
+                      {{#if this.deleted}}
+                      <a class="btn-show" href="" title="Unlock" data-id="{{this._id}}">
+                        <i style="font-size: large;" class="fa-solid fa-unlock text-white"></i>
+                      </a>
+                      {{else}}
+                      <a href="" data-mdb-toggle="tooltip" title="Remove" data-toggle="modal" data-target="#modal-hide"
+                        data-id="{{this._id}}">
+                        <i style="font-size: large;" class="fa-solid fa-circle-minus text-warning"></i>
+                      </a>
+                      {{/if}}
+                    </td>
+                  </tr>
+                  {{else}}
+                  <tr>
+                    <td colspan="4" class="text-center">
+                      <span class="text-warning">Don't found any comments for this song</span>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade" id="modal-hide" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">WARNING</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you want to hide this comment ?
+      </div>
+      <div class="modal-footer">
+        <button id="btn-submit" type="button" class="btn btn-danger">HIDE COMMENT</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="form-submit" method="post" action=""></form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var btnShow = $('.btn-show');
+    var btnSubmit = $('#btn-submit');
+    var formSubmit = document.forms['form-submit'];
+    var currentUrl = window.location.href;
+    var commentId;
+
+    $('#modal-hide').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      commentId = button.data('id');
+    });
+
+    btnSubmit.click(function () {
+      formSubmit.action = currentUrl + '/' + commentId + '?_method=PATCH';
+      formSubmit.submit();
+    })
+
+    btnShow.click(function (e) {
+      e.preventDefault();
+      var id = $(this).data('id')
+      formSubmit.action = currentUrl + '/' + id + '?_method=PATCH';
+      formSubmit.submit();
+    })
+  })
+</script>

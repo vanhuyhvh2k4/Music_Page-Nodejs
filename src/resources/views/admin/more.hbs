@@ -1,7 +1,13 @@
-<div style="background-color: tan;" class="cotainer-fluid py-5">
+<div style="background-color: tan;" class="cotainer-fluid pb-5 pt-2">
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/myadmin">Admin Page</a></li>
+    <li class="breadcrumb-item active" aria-current="page">More Feature</li>
+  </ol>
+</nav>
   <div class="container">
     <table class="table align-middle mb-0 bg-white">
-      <thead class="bg-light">
+      <thead class="bg-primary">
         <tr>
           <th>Name</th>
           <th>Author</th>
@@ -24,9 +30,9 @@
             <span>{{this.CountDeleted}}</span>
           </td>
           <td>
-            <button type="button" class="btn btn-link btn-sm btn-rounded">
+            <a href="/myadmin/more/{{this._id}}" class="btn btn-link btn-sm btn-rounded">
               Details
-            </button>
+            </a>
           </td>
         </tr>
         {{else}}
