@@ -127,12 +127,12 @@ class MyAdminController {
       
             // Lặp qua từng bài hát và tìm số lượng comment và số lượng comment đã xóa
             songs.forEach(song => {
-              const promise1 = Comment.countDocuments({ songName: song.name })
+              const promise1 = Comment.countDocuments({ songId: song._id })
                 .then(commentCount => {
                   song.Count = commentCount;
                 });
       
-              const promise2 = Comment.countDocumentsDeleted({ songName: song.name })
+              const promise2 = Comment.countDocumentsDeleted({ songId: song._id })
                 .then(commentCountDeleted => {
                   song.CountDeleted = commentCountDeleted;
                 });
@@ -147,6 +147,35 @@ class MyAdminController {
               })
               .catch(next);
           });
+      }
+
+      //[GET] /myadmin/more/:songId
+      showMoreDetail (req, res, next) {
+
+        var songQuery = Song.findOne({ "_id": req.params.songId }).lean();
+
+        var commentQuery = Comment.findWithDeleted({ "songId": req.params.songId }).populate({ path: 'userId', select: 'name avatar'});
+            
+        Promise.all([ songQuery, commentQuery])
+            .then(([song, comments]) => res.render('admin/moreDetail', {song, comments}))
+            .catch(next)
+      }
+
+      //[PATCH] /myadmin/more/:songId/:commentId
+      changeStatusComment (req, res, next) {
+        Comment.findOneWithDeleted({ "_id": req.params.commentId }).lean()
+            .then((comment) => {
+                if (comment.deleted) {
+                    Comment.restore({ "_id": req.params.commentId }).lean()
+                        .then(() => res.redirect('back'))
+                        .catch(next)
+                }
+                else {
+                    Comment.delete({ "_id": req.params.commentId }).lean()
+                        .then(() => res.redirect('back'))
+                        .catch(next)
+                }
+            })
       }
 }
 

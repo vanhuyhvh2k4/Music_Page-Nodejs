@@ -6,6 +6,10 @@ var authMiddleWares = require('../middlewares/auth.middleware.js');
 
 router.get('/more', authMiddleWares.requireAuth, myadminController.showMore);
 
+router.get('/more/:songId', myadminController.showMoreDetail);
+
+router.patch('/more/:songId/:commentId', myadminController.changeStatusComment);
+
 router.get('/create', authMiddleWares.requireAuth, myadminController.showCreatePage);
 
 router.post('/stored',authMiddleWares.requireAuth, myadminController.stored);
