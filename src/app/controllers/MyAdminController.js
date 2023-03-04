@@ -1,6 +1,6 @@
 const Song = require('../models/Song.js');
 const User = require('../models/User.js');
-const fs = require('fs');
+const Comment = require('../models/Comment.js');
 
 class MyAdminController {
 
@@ -115,6 +115,39 @@ class MyAdminController {
             .then((users) => res.redirect('back'))
             .catch(next)
     }
+
+    //[GET] / myadmin/more
+    showMore (req, res, next) {
+        Song.find({})
+          .lean()
+          .exec((err, songs) => {
+            if (err) return next(err);
+      
+            const promises = [];
+      
+            // Lặp qua từng bài hát và tìm số lượng comment và số lượng comment đã xóa
+            songs.forEach(song => {
+              const promise1 = Comment.countDocuments({ songName: song.name })
+                .then(commentCount => {
+                  song.Count = commentCount;
+                });
+      
+              const promise2 = Comment.countDocumentsDeleted({ songName: song.name })
+                .then(commentCountDeleted => {
+                  song.CountDeleted = commentCountDeleted;
+                });
+      
+              promises.push(promise1, promise2);
+            });
+      
+            // Đợi tất cả các lời hứa hoàn thành trước khi render trang
+            Promise.all(promises)
+              .then(() => {
+                res.render('admin/more', { songs });
+              })
+              .catch(next);
+          });
+      }
 }
 
 module.exports = new MyAdminController;
