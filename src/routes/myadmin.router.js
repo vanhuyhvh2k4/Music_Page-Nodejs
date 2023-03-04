@@ -4,6 +4,8 @@ const myadminController = require('../app/controllers/MyAdminController.js');
 
 var authMiddleWares = require('../middlewares/auth.middleware.js');
 
+router.get('/more', authMiddleWares.requireAuth, myadminController.showMore);
+
 router.get('/create', authMiddleWares.requireAuth, myadminController.showCreatePage);
 
 router.post('/stored',authMiddleWares.requireAuth, myadminController.stored);
@@ -12,11 +14,11 @@ router.get('/myMusic/edit/:name', authMiddleWares.requireAuth, myadminController
 
 router.put('/myMusic/:name', myadminController.upload);
 
-router.get('/account', myadminController.showAccount);
+router.get('/account', authMiddleWares.requireAuth, myadminController.showAccount);
 
 router.patch('/account/:id/change', myadminController.changeStatus);
 
-router.get('/account/trash', myadminController.showAccountTrash);
+router.get('/account/trash', authMiddleWares.requireAuth, myadminController.showAccountTrash);
 
 router.patch('/account/:id/restore', myadminController.enableAccount);
 

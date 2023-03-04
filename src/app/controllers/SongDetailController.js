@@ -7,15 +7,19 @@ class SongDetailController {
     // [GET] /song/:slug
     showDetail (req, res, next) {
         
-        var userId = req.cookies.loginId;
-        var songName = req.params.slug;
-        var detailSongQuery = Song.findOne({ name: req.params.slug}).lean();
         var moreSongQuery = Song.find({}).lean();
-        var commentQuery = Comment.find({ songName: songName, deleted: false }).sort({"createdAt": -1}).lean();
-        var userQuery = User.findOne({ _id: userId }).lean();
+        var userQuery = User.findOne({ _id: req.cookies.loginId }).lean();
 
-        Promise.all([detailSongQuery, moreSongQuery, commentQuery, userQuery])
-            .then(([song, songs, comments, user]) => {
+        Song.findOne({ "name": req.params.slug }).exec((err, song) => {
+
+            var commentQuery = Comment.find({ "songId": song._id })
+        .populate({
+            path: 'userId',
+            select: 'name avatar'
+        });
+
+            Promise.all([moreSongQuery, commentQuery, userQuery])
+            .then(([songs, comments, user]) => {
                 // find index of current song
                 var index = songs.indexOf(songs.find(song => song.name == req.params.slug));
 
@@ -26,18 +30,18 @@ class SongDetailController {
                 res.render('songDetail', {song, songs, comments, user, type: req.flash('type'), intro: req.flash('intro'), message: req.flash('message')})
             })
             .catch(next)
+        });
     }
 
     //[POST] /song/:slug
     sendComment (req, res, next) {
-        // var userId = req.cookies.loginId;
-        // var songName = req.params.slug;
+
         var userQuery = User.findOne({ _id: req.cookies.loginId }).lean();
         var songQuery = Song.findOne({ name: req.params.slug }).lean();
 
         Promise.all([userQuery, songQuery])
             .then(([user, song]) => {
-                Comment.create({ avatar: user.avatar, userId: user._id, userName: user.name, songId: song._id, songName: song.name, content: req.body.comment })
+                Comment.create({ userId: user._id, songId: song._id, content: req.body.comment })
                 .then(() => res.redirect('back'))
                 .catch(next)
         })
@@ -45,6 +49,7 @@ class SongDetailController {
 
     //[DELETE] /song/:commentId
     delete (req, res, next) {
+        
         var userId = req.cookies.loginId;
         var commentId = req.params.commentId;
 

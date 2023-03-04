@@ -5,11 +5,8 @@ const Schema = mongoose.Schema;
 var mongooseDelete = require('mongoose-delete');
 
 const Comment = new Schema({
-    avatar: String,
-    userId: String,
-    userName: String,
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
     songId: String,
-    songName: String,
     content: String,
 }, {
     timestamps: true,

@@ -1,0 +1,7 @@
+{{#each comments}}
+<div class="comment">
+    <h4>{{this.userId.name}}</h4>
+    <img src="{{this.userId.avatar}}" alt="Avatar">
+    <p>{{this.content}}</p>
+</div>
+{{/each}}

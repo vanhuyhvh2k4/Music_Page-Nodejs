@@ -9,6 +9,7 @@ var methodOverride = require('method-override')
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
 var flash = require('connect-flash');
+const helpers = require('./helpers/helpers.js');
 
 // cookie-session
 app.use(session({
@@ -43,30 +44,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 route(app);
 
 // handlebars
-app.engine('handlebars', exphbs({
-  helpers: {
-    sum: (a, b) => a + b,
-    times: (n, block) => {
-      
-      for(var i = 1; i <= n; ++i)
-        var accum = '';
-        for(var i = 1; i <= n; ++i)
-        accum += block.fn(i);
-        return accum;
-    }
-  }
-})
-);
-app.set('view engine', 'handlebars');
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    },
+    helpers: helpers,
+});
+
+app.engine('.hbs', hbs.engine);
+app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'resources/views'));
-
-// exphbs.registerHelper('times', function(n, block) {
-//   var accum = '';
-//   for(var i = 0; i <= n; ++i)
-//       accum += block.fn(i);
-//   return accum;
-// });
-
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
