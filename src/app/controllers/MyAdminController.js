@@ -177,6 +177,30 @@ class MyAdminController {
                 }
             })
       }
+
+      showDetailCommentOfUser (req, res, next) {
+        Comment.findWithDeleted({ "userId": req.params.userId })
+            .populate({ path: 'songId userId', select: 'name image' })
+            .exec((err, comments) => res.render('admin/detailCommentOfUser', {comments}))
+      }
+
+      //[PATH] /myadmin/account/:userId/:commentId
+      changeStatusCommentOfUser (req, res, next) {
+
+        Comment.findOneWithDeleted({ "_id": req.params.commentId }).lean()
+            .then((comment) => {
+                if (comment.deleted) {
+                    Comment.restore({ "_id": req.params.commentId }).lean()
+                        .then(() => res.redirect('back'))
+                        .catch(next)
+                }
+                else {
+                    Comment.delete({ "_id": req.params.commentId }).lean()
+                        .then(() => res.redirect('back'))
+                        .catch(next)
+                }
+            })
+      }
 }
 
 module.exports = new MyAdminController;

@@ -4,6 +4,10 @@ const myadminController = require('../app/controllers/MyAdminController.js');
 
 var authMiddleWares = require('../middlewares/auth.middleware.js');
 
+router.patch('/account/:userId/:commentId', myadminController.changeStatusCommentOfUser);
+
+router.get('/account/:userId', myadminController.showDetailCommentOfUser);
+
 router.get('/more', authMiddleWares.requireAuth, myadminController.showMore);
 
 router.get('/more/:songId', myadminController.showMoreDetail);
