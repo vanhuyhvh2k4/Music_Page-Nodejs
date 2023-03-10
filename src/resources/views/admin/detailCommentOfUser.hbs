@@ -1,0 +1,125 @@
+    <section class="vh-100 bg-info">
+        <nav class="pt-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/myadmin">Admin Page</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/myadmin/account">Management Account</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Details</li>
+        </ol>
+        </nav>
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-12 col-xl-10">
+
+                    <div class="card">
+                        <div class="card-header p-3">
+                            <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Comment List</h5>
+                        </div>
+                        <div class="card-body" data-mdb-perfect-scrollbar="true"
+                            style="position: relative; height: 400px; overflow-y: scroll;">
+
+                            <table style="overflow-y: scroll;" class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Song Name</th>
+                                        <th scope="col">Comment</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each comments}}
+                                    <tr class="fw-normal">
+                                        <th>
+                                            <img src="{{this.songId.image}}"
+                                                class="shadow-1-strong rounded-circle" alt="{{this.songId.name}}"
+                                                style="width: 45px; height: 45px; object-fit: cover;">
+                                            <span class="ms-2">{{this.songId.name}}</span>
+                                        </th>
+                                        <td class="align-middle">
+                                            <span>{{this.content}}</span>
+                                        </td>
+                                        <td class="align-middle">
+                                            {{#if this.deleted}}
+                                            <h6 class="mb-0"><span class="badge bg-danger text-white">Hidden</span></h6>
+                                            {{else}}
+                                            <h6 class="mb-0"><span class="badge bg-success text-white">Public</span></h6>
+                                            {{/if}}
+                                        </td>
+                                        <td class="align-middle">
+                                            {{#if this.deleted}}
+                                                <a class="public-btn" href="#!" data-mdb-toggle="tooltip" title="Done" data-id="{{this._id}}">
+                                                    <i class="fa-regular fa-eye"></i>
+                                                </a>
+                                            {{else}}
+                                            <a class="hide-btn" href="#!" data-mdb-toggle="tooltip" title="Remove" data-toggle="modal" data-target="#modal-hide"
+                        data-id="{{this._id}}">
+                                                <i class="fa-regular fa-eye-slash text-danger"></i>
+                                            {{/if}}
+                                        </td>
+                                    </tr>
+                                    {{else}}
+                                    <tr class="text-center">
+                                        <td colspan="4">This user don't have any comments</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="modal-hide" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">WARNING</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you want to hide this comment ?
+      </div>
+      <div class="modal-footer">
+        <button id="btn-submit" type="button" class="btn btn-danger">HIDE COMMENT</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {{!-- Form change status comment --}}
+    <form name="form-submit" method="post"></form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var btnShow = $('.public-btn');
+            var btnSubmit = $('#btn-submit');
+            var formSubmit = document.forms['form-submit'];
+            var currentUrl = window.location.href;
+            var commentId;
+
+            $('#modal-hide').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            commentId = button.data('id');
+            });
+
+            btnSubmit.click(function () {
+            formSubmit.action = currentUrl + '/' + commentId + '?_method=PATCH';
+            formSubmit.submit();
+            })
+
+            btnShow.click(function (e) {
+            e.preventDefault();
+            var id = $(this).data('id')
+            formSubmit.action = currentUrl + '/' + id + '?_method=PATCH';
+            formSubmit.submit();
+            })
+  })
+    </script>
