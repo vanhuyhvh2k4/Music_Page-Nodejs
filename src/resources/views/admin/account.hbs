@@ -19,11 +19,13 @@
       {{#each users}}
       <tr>
         <th scope="row">{{sum @index 1}}</th>
-        <td class="d-flex align-items-center">
-          <div style="width: 40px; height: 40px;">
-            <img style="object-fit: cover; border-radius: 50%;" width="100%" height="100%" src="/media/users/{{this.avatar}}" alt="avatar" title="{{this.name}}">
-          </div>
-          <span class="text-nowrap ml-2">{{this.name}}</span>
+        <td>
+          <a class="d-flex align-items-center user-item" href="/myadmin/account/info/{{this._id}}" title="Click to see more info of {{this.name}}">
+            <div style="width: 40px; height: 40px;">
+              <img style="object-fit: cover; border-radius: 50%;" width="100%" height="100%" src="/media/users/{{this.avatar}}" alt="avatar" title="{{this.name}}">
+            </div>
+            <span class="text-nowrap ml-2 text-dark">{{this.name}}</span>
+          </a>
         </td>
         <td class="text-nowrap">{{this.email}}</td>
         <td>{{this.createdAt}}</td>

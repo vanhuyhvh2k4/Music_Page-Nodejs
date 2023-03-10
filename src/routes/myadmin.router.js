@@ -4,6 +4,8 @@ const myadminController = require('../app/controllers/MyAdminController.js');
 
 var authMiddleWares = require('../middlewares/auth.middleware.js');
 
+router.get('/account/info/:userId', authMiddleWares.requireAuth, myadminController.showUserInfo);
+
 router.patch('/account/:userId/:commentId', myadminController.changeStatusCommentOfUser);
 
 router.get('/account/:userId', myadminController.showDetailCommentOfUser);

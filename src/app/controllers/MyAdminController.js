@@ -201,6 +201,15 @@ class MyAdminController {
                 }
             })
       }
+
+      showUserInfo (req, res, next) {
+        User.findOne({ "_id": req.params.userId })
+            .exec((err, user) => {
+                if (user) {
+                    res.render('admin/profile', {user})
+                }
+            })
+      }
 }
 
 module.exports = new MyAdminController;
